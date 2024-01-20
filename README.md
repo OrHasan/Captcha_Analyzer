@@ -11,7 +11,9 @@
 <br />
 
 <div align="center">
+  
   ![Captcha Filtering Example][Project-UI]
+  
 </div>
 
 
