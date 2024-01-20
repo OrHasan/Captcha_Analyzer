@@ -1,7 +1,7 @@
 <div align="center">
   <h2> Captcha_Analyzer </h2>
   <h5> Using a controlled chrome browser, the code Browsing to the site, Capturing the captcha, Filtering all the noise from the text, Translating it to a text output, and finally Sending the result to the website </h5>
-
+</div>
 
 <br />
 
@@ -10,9 +10,11 @@
 
 <br />
 
+<div align="center">
 ![Captcha Filtering Example][Project-UI]
-
 </div>
+
+
 ## Configuration File
 Almost any important data inside the code can be reconfigured directly from the "Analyzer Configurations.ini" file without the need to interact with the code itself.
 
