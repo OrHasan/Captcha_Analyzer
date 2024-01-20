@@ -52,9 +52,9 @@ client_access_delay = 0.25                                       # Delay between
 show_comparison = True    # Show the filtering process picture
 
 [local_test]
-test_type = Model Test    # Choice the test type:
-# "Model Test" - Test the analysis model constancy
-# "Filter Test" - Test different filtering steps
+test_type = Model Test                                 # Choice the test type:
+                                                         # "Model Test" - Test the analysis model constancy
+                                                         # "Filter Test" - Test different filtering steps
 test_database_dir = Data/Test Database                 # Directory of all the desired captchas to run the test on
 test_client_access_delay = 0.5                         # Same as "client_access_delay" but specific for the local test
 model_test_repeats = 5                                 # How many times to run the Model Test on each captcha
