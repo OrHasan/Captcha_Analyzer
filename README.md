@@ -14,7 +14,7 @@
 
 <div align="center">
   
-  ![Captcha Filtering Example][Project-UI]
+  ![Captcha Filtering Example][Filtering-Example]
   
 </div>
 
@@ -65,7 +65,7 @@ filters_1_2_3_dir = Data\Methods Test\Filters 1,2,3    # Directory to save the r
 filters_2_3_dir = Data\Methods Test\Filters 2,3        # Directory to save the results of using only the Dilation & Erosion filters
 ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right"><a href="#readme-top">back to top</a></p>
 
 
 ## Local Tester
@@ -79,7 +79,15 @@ For each captcha in the _[test_database_dir]_ folder there will be a progress ba
 Each file in the _[test_database_dir]_ folder need to be called with the expected result. The test will run each captcha with every specified filters combination in the code and save the filtering proccess picture in a corresponding subfolder inside "Methods Test" folder.
 
 The result files' names will be in the follwing logic:
-`Captch #_[Index]_ - '_[Result]_' (_[X]_ of _[Y]_ chars, _[Z]_ extra chars).png`
+
+`Captch #[Index] - '[Result]' ([X] of [Y] chars, [Z] extra chars).png`
+
+Where:
+- Index - Running index, according to the highest index currently in the folder
+- Result - Client result from the filtered captcha
+- X - How many correct chars were detected (same char in the same location as in the original file name)
+- Y - How many chars available in the picture (according to the original file name)
+- Z - How many extra chars were detected (`len(result) > Y`); if Z=0, this name section will be discarded
 
 Testing the following filters combinations:
 - 1 step: Median filter
@@ -89,8 +97,55 @@ Testing the following filters combinations:
 > [!NOTE]
 > The Dilation & Erosion filters are in reversed order because the results they gave were inverted
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+# Filters
+**Median Blur**
+Use to clear _"Salt & Papper"_ noise.
+
+Running a mask on the picture (as example - 3x3), and replacing the pixel value in the center of the crossover between the picture and the mask with a middle value in the crossover (while looking on those values in an ascending order).
+
+<div align="center">
+  
+  ![Median Filter][Project-UI]
+
+  ![Median Filter - Example][Project-UI]
+  
+</div>
+
+**Erosion**
+Use to shrink/remove objects.
+
+Running a mask on the picture, and removing any pixel that found in a place that the crossover between the picture and the mask isn't the same.
+
+<div align="center">
+  
+  ![Erosion Filter][Project-UI]
+
+  ![Erosion Filter - Example][Project-UI]
+  
+</div>
+
+**Dilation**
+Use to expand objects.
+
+Running a mask on the picture, and adding pixels in the crossover between the picture and the mask if the central pixal in the crossover is the same.
+
+<div align="center">
+  
+  ![Dilation Filter][Project-UI]
+
+  ![Dilation Filter - Example][Project-UI]
+  
+</div>
+
+<p align="right"><a href="#readme-top">back to top</a></p>
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[Project-UI]: Pictures/Captcha_Filtering_Example.png
+[Filtering-Example]: Pictures/Captcha_Filtering_Example.png
+[Median-Filter]: Pictures/Filters/Median_Filter.png
+[Median-Filter-Example]: Pictures/Filters/Median_Filter_Example.png
+[Erosion-Filter]: Pictures/Filters/Erosion_Filter.png
+[Erosion-Filter-Example]: Pictures/Filters/Erosion_Filter_Example.png
+[Dilation-Filter]: Pictures/Filters/Dilation_Filter.png
+[Dilation-Filter-Example]: Pictures/Filters/Dilation_Filter_Example.png
