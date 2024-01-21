@@ -29,8 +29,8 @@
     <li>
       <a href="#local-tester">Local Tester</a>
       <ul>
-        <li><a href="#model-test">Model Testt</a></li>
-        <li><a href="#filter-testt">Filter Test</a></li>
+        <li><a href="#model-test">Model Test</a></li>
+        <li><a href="#filter-test">Filter Test</a></li>
       </ul>
     </li>
     <li><a href="#filters">Filters</a></li>
@@ -43,7 +43,7 @@
 </details>
 
 
-
+<!-- CONFIGURATION FILE -->
 ## Configuration File
 Almost any important data inside the code can be reconfigured directly from the `Analyzer Configurations.ini` file without the need to interact with the code itself.
 
