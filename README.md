@@ -19,6 +19,31 @@
 </div>
 
 
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#configuration-file">Configuration File</a>
+    </li>
+    <li>
+      <a href="#local-tester">Local Tester</a>
+      <ul>
+        <li><a href="#model-test">Model Testt</a></li>
+        <li><a href="#filter-testt">Filter Test</a></li>
+      </ul>
+    </li>
+    <li><a href="#filters">Filters</a></li>
+      <ul>
+        <li><a href="#median-blur ">Median Blur</a></li>
+        <li><a href="#erosion">Erosion</a></li>
+        <li><a href="#dilation">Dilation</a></li>
+      </ul>
+  </ol>
+</details>
+
+
+
 ## Configuration File
 Almost any important data inside the code can be reconfigured directly from the `Analyzer Configurations.ini` file without the need to interact with the code itself.
 
@@ -68,13 +93,14 @@ filters_2_3_dir = Data\Methods Test\Filters 2,3        # Directory to save the r
 <p align="right"><a href="#readme-top">back to top</a></p>
 
 
+<!-- LOCAL TESTER -->
 ## Local Tester
-**Model Test**: Test results constancy - Sending the cleared captcha _[model_test_repeats]_ times to the client.
+### Model Test: Test results constancy - Sending the cleared captcha _[model_test_repeats]_ times to the client.
 
 For each captcha in the _[test_database_dir]_ folder there will be a progress bar, and in the end of each one all the results will be printed to the console with the result.
 
 
-**Filter Test**: Test filters - Testing a different combination of the available filters.
+### Filter Test: Test filters - Testing a different combination of the available filters.
 
 Each file in the _[test_database_dir]_ folder need to be called with the expected result. The test will run each captcha with every specified filters combination in the code and save the filtering proccess picture in a corresponding subfolder inside "Methods Test" folder.
 
@@ -100,8 +126,9 @@ Testing the following filters combinations:
 <p align="right"><a href="#readme-top">back to top</a></p>
 
 
-# Filters
-**Median Blur**
+<!-- FILTERS -->
+## Filters
+### Median Blur
 (Use to clear _"Salt & Papper"_ noise)
 
 Running a mask on the picture (as example - 3x3), and replacing the pixel value in the center of the crossover between the picture and the mask with a middle value in the crossover (while looking on those values in an ascending order).
@@ -114,7 +141,7 @@ Running a mask on the picture (as example - 3x3), and replacing the pixel value 
   
 </div>
 
-**Erosion**
+### Erosion
 (Use to shrink/remove objects)
 
 Running a mask on the picture, and removing any pixel that found in a place that the crossover between the picture and the mask isn't the same.
@@ -127,7 +154,7 @@ Running a mask on the picture, and removing any pixel that found in a place that
   
 </div>
 
-**Dilation**
+### Dilation
 (Use to expand objects)
 
 Running a mask on the picture, and adding pixels in the crossover between the picture and the mask if the central pixal in the crossover is the same.
