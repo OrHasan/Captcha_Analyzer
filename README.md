@@ -1,3 +1,5 @@
+<a name="readme-top"></a>
+
 <div align="center">
   <h2> Captcha_Analyzer </h2>
   <h5> Using a controlled chrome browser, the code Browsing to the site, Capturing the captcha, Filtering all the noise from the text, Translating it to a text output, and finally Sending the result to the website </h5>
@@ -18,9 +20,9 @@
 
 
 ## Configuration File
-Almost any important data inside the code can be reconfigured directly from the "Analyzer Configurations.ini" file without the need to interact with the code itself.
+Almost any important data inside the code can be reconfigured directly from the `Analyzer Configurations.ini` file without the need to interact with the code itself.
 
-In case of a missing file, the code will create it with the default data that can be found inside "def_config_file.py". In case of a missing section or a specific key in one of the file sections, the code will replace the entire section with the default data (the rest of the file will be untouched).
+In case of a missing file, the code will create it with the default data that can be found inside `def_config_file.py`. In case of a missing section or a specific key in one of the file sections, the code will replace the entire section with the default data (the rest of the file will be untouched).
 
 **Analyzer Configurations.ini** - Detailed
 ```
@@ -63,7 +65,31 @@ filters_1_2_3_dir = Data\Methods Test\Filters 1,2,3    # Directory to save the r
 filters_2_3_dir = Data\Methods Test\Filters 2,3        # Directory to save the results of using only the Dilation & Erosion filters
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
 ## Local Tester
+**Model Test**: Test results constancy - Sending the cleared captcha _[model_test_repeats]_ times to the client.
+
+For each captcha in the _[test_database_dir]_ folder there will be a progress bar, and in the end of each one all the results will be printed to the console with the result.
+
+
+**Filter Test**: Test filters - Testing a different combination of the available filters.
+
+Each file in the _[test_database_dir]_ folder need to be called with the expected result. The test will run each captcha with every specified filters combination in the code and save the filtering proccess picture in a corresponding subfolder inside "Methods Test" folder.
+
+The result files' names will be in the follwing logic:
+`Captch #_[Index]_ - '_[Result]_' (_[X]_ of _[Y]_ chars, _[Z]_ extra chars).png`
+
+Testing the following filters combinations:
+- 1 step: Median filter
+- 3 steps: Median filter -> Dilation filter -> Erosion filter
+- 2 steps: Dilation filter -> Erosion filter
+
+> [!NOTE]
+> The Dilation & Erosion filters are in reversed order because the results they gave were inverted
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
