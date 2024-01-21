@@ -106,9 +106,9 @@ Running a mask on the picture (as example - 3x3), and replacing the pixel value 
 
 <div align="center">
   
-  ![Median Filter][Project-UI]
+  ![Median Filter][Median-Filter]
 
-  ![Median Filter - Example][Project-UI]
+  ![Median Filter - Example][Median-Filter-Example]
   
 </div>
 
@@ -119,9 +119,9 @@ Running a mask on the picture, and removing any pixel that found in a place that
 
 <div align="center">
   
-  ![Erosion Filter][Project-UI]
+  ![Erosion Filter][Erosion-Filter]
 
-  ![Erosion Filter - Example][Project-UI]
+  ![Erosion Filter - Example][Erosion-Filter-Example]
   
 </div>
 
@@ -132,9 +132,9 @@ Running a mask on the picture, and adding pixels in the crossover between the pi
 
 <div align="center">
   
-  ![Dilation Filter][Project-UI]
+  ![Dilation Filter][Dilation-Filter]
 
-  ![Dilation Filter - Example][Project-UI]
+  ![Dilation Filter - Example][Dilation-Filter-Example]
   
 </div>
 
