@@ -29,8 +29,8 @@
     <li>
       <a href="#local-tester">Local Tester</a>
       <ul>
-        <li><a href="#model-test">Model Test</a></li>
-        <li><a href="#filter-test">Filter Test</a></li>
+        <li><a href="#model-test">Model Testt</a></li>
+        <li><a href="#filter-testt">Filter Test</a></li>
       </ul>
     </li>
     <li><a href="#filters">Filters</a></li>
@@ -95,12 +95,14 @@ filters_2_3_dir = Data\Methods Test\Filters 2,3        # Directory to save the r
 
 <!-- LOCAL TESTER -->
 ## Local Tester
-### Model Test: Test results constancy - Sending the cleared captcha _[model_test_repeats]_ times to the client.
+### Model Test
+Test results constancy - Sending the cleared captcha _[model_test_repeats]_ times to the client.
 
 For each captcha in the _[test_database_dir]_ folder there will be a progress bar, and in the end of each one all the results will be printed to the console with the result.
 
 
-### Filter Test: Test filters - Testing a different combination of the available filters.
+### Filter Test
+Test filters - Testing a different combination of the available filters.
 
 Each file in the _[test_database_dir]_ folder need to be called with the expected result. The test will run each captcha with every specified filters combination in the code and save the filtering proccess picture in a corresponding subfolder inside "Methods Test" folder.
 
