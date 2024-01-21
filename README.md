@@ -97,10 +97,12 @@ Testing the following filters combinations:
 > [!NOTE]
 > The Dilation & Erosion filters are in reversed order because the results they gave were inverted
 
+<p align="right"><a href="#readme-top">back to top</a></p>
+
 
 # Filters
 **Median Blur**
-Use to clear _"Salt & Papper"_ noise.
+(Use to clear _"Salt & Papper"_ noise)
 
 Running a mask on the picture (as example - 3x3), and replacing the pixel value in the center of the crossover between the picture and the mask with a middle value in the crossover (while looking on those values in an ascending order).
 
@@ -113,7 +115,7 @@ Running a mask on the picture (as example - 3x3), and replacing the pixel value 
 </div>
 
 **Erosion**
-Use to shrink/remove objects.
+(Use to shrink/remove objects)
 
 Running a mask on the picture, and removing any pixel that found in a place that the crossover between the picture and the mask isn't the same.
 
@@ -126,7 +128,7 @@ Running a mask on the picture, and removing any pixel that found in a place that
 </div>
 
 **Dilation**
-Use to expand objects.
+(Use to expand objects)
 
 Running a mask on the picture, and adding pixels in the crossover between the picture and the mask if the central pixal in the crossover is the same.
 
