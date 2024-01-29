@@ -52,10 +52,13 @@ In case of a missing file, the code will create it with the default data that ca
 **Analyzer Configurations.ini** - Detailed
 ```
 [general]
-history_dir = Data/History                         # Directory of all captured captchas and the detection results for a future ML model
-achieved_captcha_file = Data/New Captcha.png       # Where to save the current tested captcha
-cleared_captcha_file = Data/Cleared Captcha.png    # Where to save the current filtered captcha
-captcha_attempts = 20                              # How many attempts to detect the captcha
+data_folder = Data                                            # Data directory name
+history_dir = %(data_folder)s/History                         # Directory of all captured captchas and the detection results for a future ML model
+process_history_dir = %(history_dir)s/Filtering Process       # Filtering process pictures history
+cleared_history_dir = %(history_dir)s/Cleared Captchas        # Final filtered pictures history
+achieved_captcha_file = %(data_folder)s/New Captcha.png       # Where to save the current tested captcha
+cleared_captcha_file = %(data_folder)s/Cleared Captcha.png    # Where to save the current filtered captcha
+captcha_attempts = 20                                         # How many attempts to detect the captcha
 
 [website]
 website_url = https://www.zone-h.org/archive?hz=1            # The URL with the captcha
@@ -79,15 +82,16 @@ client_access_delay = 0.25                                       # Delay between
 show_comparison = True    # Show the filtering process picture
 
 [local_test]
-test_type = Model Test                                 # Choice the test type:
-                                                         # "Model Test" - Test the analysis model constancy
-                                                         # "Filter Test" - Test different filtering steps
-test_database_dir = Data/Test Database                 # Directory of all the desired captchas to run the test on
-test_client_access_delay = 0.5                         # Same as "client_access_delay" but specific for the local test
-model_test_repeats = 5                                 # How many times to run the Model Test on each captcha
-filter_1_dir = Data\Methods Test\Filter 1              # Directory to save the results of using only the Median filter
-filters_1_2_3_dir = Data\Methods Test\Filters 1,2,3    # Directory to save the results of using all the filters together
-filters_2_3_dir = Data\Methods Test\Filters 2,3        # Directory to save the results of using only the Dilation & Erosion filters
+test_type = Model Test                                      # Choice the test type:
+                                                              # "Model Test" - Test the analysis model constancy
+                                                              # "Filter Test" - Test different filtering steps
+test_database_dir = ${general:data_folder}/Test Database    # Directory of all the desired captchas to run the test on
+test_client_access_delay = 0.5                              # Same as "client_access_delay" but specific for the local test
+model_test_repeats = 10                                     # How many times to run the Model Test on each captcha
+methods_test_dir = ${general:data_folder}/Methods Test      # Directory to save the results of using different filtering steps
+filter_1_dir = %(methods_test_dir)s/Filter 1                # Directory to save the results of using only the Median filter
+filters_1_2_3_dir = %(methods_test_dir)s/Filters 1,2,3      # Directory to save the results of using all the filters together
+filters_2_3_dir = %(methods_test_dir)s/Filters 2,3          # Directory to save the results of using only the Dilation & Erosion filters
 ```
 
 <p align="right"><a href="#readme-top">back to top</a></p>
