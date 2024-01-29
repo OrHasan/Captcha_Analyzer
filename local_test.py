@@ -40,8 +40,8 @@ for i in range(2):
 # True, True  /  True, False  /  False, True
 for i in range(2):
     try:
-        use_median = config['filter']['use_median']
-        use_dilate_erode = config['filter']['use_dilate_erode']
+        use_median = eval(config['filter']['use_median'])
+        use_dilate_erode = eval(config['filter']['use_dilate_erode'])
         median_kernel_size = int(config['filter']['median_kernel_size'])
         dilate_erode_kernel_size = eval(config['filter']['dilate_erode_kernel_size'])
         dilate_erode_iterations = int(config['filter']['dilate_erode_iterations'])
@@ -78,6 +78,12 @@ for i in range(2):
         break
     except KeyError:
         create_config.update_config_file("local_test")
+
+# Create the filters folders if not exist
+os.makedirs(filter_1_dir, exist_ok=True)
+os.makedirs(filters_1_2_3_dir, exist_ok=True)
+os.makedirs(filters_2_3_dir, exist_ok=True)
+
 captcha_pics = [f for f in listdir(test_db_dir) if isfile(join(test_db_dir, f))]
 
 
@@ -92,7 +98,12 @@ for captcha in captcha_pics:
         for i in tqdm(range(model_test_repeats)):
             model_test_results[i] = func.run_model(client, cleared_captcha_file, client_access_attempts)
 
+        constant_result = all(test_result == model_test_results[0] for test_result in model_test_results[1:])
         print(model_test_results)
+        if constant_result:
+            print("The results are", "\033[92m {}\033[00m" .format("Constant"))
+        else:
+            print("The results are", "\033[91m {}\033[00m".format("NOT Constant"))
 
     elif test_type == "Filter Test":
         use_median = True

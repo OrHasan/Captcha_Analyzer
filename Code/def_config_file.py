@@ -4,9 +4,12 @@ import configparser
 
 def create_general_section():
     # General:
-    config['general'] = {'history_dir': "Data/History",
-                         'achieved_captcha_file': "Data/New Captcha.png",
-                         'cleared_captcha_file': "Data/Cleared Captcha.png",
+    config['general'] = {'data_folder': "Data",
+                         'history_dir': "%(data_folder)s/History",
+                         'process_history_dir': "%(history_dir)s/Filtering Process",
+                         'cleared_history_dir': "%(history_dir)s/Cleared Captchas",
+                         'achieved_captcha_file': "%(data_folder)s/New Captcha.png",
+                         'cleared_captcha_file': "%(data_folder)s/Cleared Captcha.png",
                          'captcha_attempts': "20"}
 
 def create_website_section():
@@ -40,14 +43,15 @@ def create_local_test_section():
     # Tests:
     # test_type: "Model Test" - Test the analysis model constancy / "Filter Test" - Test different filtering steps
     config['local_test'] = {'test_type': "Filter Test",
-                            'test_database_dir': "Data/Test Database",
+                            'test_database_dir': "${general:data_folder}/Test Database",
                             'test_client_access_delay': "0.5",
                             # Model Test variables:
                             'model_test_repeats': "10",
                             # Filter Test variables:
-                            'filter_1_dir': "Data\Methods Test\Filter 1",
-                            'filters_1_2_3_dir': "Data\Methods Test\Filters 1,2,3",
-                            'filters_2_3_dir': "Data\Methods Test\Filters 2,3"}
+                            'methods_test_dir': "${general:data_folder}/Methods Test",
+                            'filter_1_dir': "%(methods_test_dir)s/Filter 1",
+                            'filters_1_2_3_dir': "%(methods_test_dir)s/Filters 1,2,3",
+                            'filters_2_3_dir': "%(methods_test_dir)s/Filters 2,3"}
 
 
 def create_config_file():
@@ -58,7 +62,7 @@ def create_config_file():
     create_debug_section()
     create_local_test_section()
 
-    with open('Analyzer Configurations.ini', 'w') as configfile:
+    with open(config_file, 'w') as configfile:
         config.write(configfile)
 
 
@@ -91,7 +95,7 @@ def update_config_file(section):
         print('Please recheck the section name inside the code')
         return "Unavailable Section"
 
-    with open('Analyzer Configurations.ini', 'w') as configfile:
+    with open(config_file, 'w') as configfile:
         config.write(configfile)
 
 
