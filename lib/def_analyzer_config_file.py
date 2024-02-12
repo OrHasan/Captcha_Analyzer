@@ -1,15 +1,15 @@
 import os
-import configparser
+from configparser import ConfigParser, ExtendedInterpolation
 
 
 def create_general_section():
     # General:
-    config['general'] = {'data_folder': "Data",
-                         'history_dir': "%(data_folder)s/History",
-                         'process_history_dir': "%(history_dir)s/Filtering Process",
-                         'cleared_history_dir': "%(history_dir)s/Cleared Captchas",
-                         'achieved_captcha_file': "%(data_folder)s/New Captcha.png",
-                         'cleared_captcha_file': "%(data_folder)s/Cleared Captcha.png",
+    config['general'] = {'data_folder': "data",
+                         'history_dir': "${data_folder}/history",
+                         'process_history_dir': "${history_dir}/filtering process",
+                         'cleared_history_dir': "${history_dir}/cleared captchas",
+                         'achieved_captcha_file': "${data_folder}/new captcha.png",
+                         'cleared_captcha_file': "${data_folder}/cleared captcha.png",
                          'captcha_attempts': "20"}
 
 def create_website_section():
@@ -43,15 +43,28 @@ def create_local_test_section():
     # Tests:
     # test_type: "Model Test" - Test the analysis model constancy / "Filter Test" - Test different filtering steps
     config['local_test'] = {'test_type': "Filter Test",
-                            'test_database_dir': "${general:data_folder}/Test Database",
+                            'test_database_dir': "${general:data_folder}/test database",
                             'test_client_access_delay': "0.5",
                             # Model Test variables:
                             'model_test_repeats': "10",
                             # Filter Test variables:
-                            'methods_test_dir': "${general:data_folder}/Methods Test",
-                            'filter_1_dir': "%(methods_test_dir)s/Filter 1",
-                            'filters_1_2_3_dir': "%(methods_test_dir)s/Filters 1,2,3",
-                            'filters_2_3_dir': "%(methods_test_dir)s/Filters 2,3"}
+                            'methods_test_dir': "${general:data_folder}/methods test",
+                            'filter_1_dir': "${methods_test_dir}/filter 1",
+                            'filters_1_2_3_dir': "${methods_test_dir}/filters 1,2,3",
+                            'filters_2_3_dir': "${methods_test_dir}/filters 2,3"}
+
+
+def read_config_file(config_file_name="analyzer configurations.ini"):
+    global config_file, config
+
+    config_file = config_file_name
+    config = ConfigParser(interpolation=ExtendedInterpolation())
+    if not os.path.isfile(config_file):
+        print("\n\033[43m {}\033[00m".format('WARNING'), 'The Configurations file',
+              "\033[33m {}\033[00m".format('IS MISSING !'))
+        print('Creating default configurations file.')
+        create_config_file()
+    config.read(config_file)
 
 
 def create_config_file():
@@ -64,6 +77,7 @@ def create_config_file():
 
     with open(config_file, 'w') as configfile:
         config.write(configfile)
+    config.read(config_file)
 
 
 def update_config_file(section):
@@ -97,13 +111,7 @@ def update_config_file(section):
 
     with open(config_file, 'w') as configfile:
         config.write(configfile)
+    config.read(config_file)
 
 
-config = configparser.ConfigParser()
-config_file = "Analyzer Configurations.ini"
-if not os.path.isfile(config_file):
-    print("\n\033[43m {}\033[00m".format('WARNING'), 'The Configurations file',
-          "\033[33m {}\033[00m".format('IS MISSING !'))
-    print('Creating default configurations file.')
-    create_config_file()
-config.read(config_file)
+global config_file, config

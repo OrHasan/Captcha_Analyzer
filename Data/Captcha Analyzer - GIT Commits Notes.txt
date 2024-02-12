@@ -1,0 +1,66 @@
+GIT Commits:
+
+Version 2
++ Added the Data/History folders to sync the history of past runs between different machines
++ Code changes:
+ * main:
+  - Fixed "use_median" & "use_dilate_erode" - will now be True/False instead of String type
+  - Added Selenium Webdrive selection according to the host system (by using Gershon code: "detect_arch")
+  - Added more folders division for the history results
+  - Fixed the history result pictures indexes
+  - The cleared captcha file will also be used for the history results in the end of each loop instead of leaving it in the "Data" folder
+  - Added the attempt number to each result in the "History" folder
+ 
+ * def_config_file:
+  - Added new sections to the Configurations file (data_folder, process_history_dir, cleared_history_dir, methods_test_dir)
+  - Added dependencies between different sections & keys if they are using the same root ( %(..)s, ${..:..} )
+  - Fixed places with constant file name and replaced it with his variable
+  
+ * local_test:
+  - Fixed "use_median" & "use_dilate_erode" - will now be True/False instead of String type
+  - Added filters test folders creation in case they don't exist
+  - Added a test for the uniformity of the results for the "Model Test" instead of the need for the user to check it by himself
+
+
+Version 2.1
+Added requirements file
+
+
+Version 3
++ Added .gitignore
++ Moved code files from "Code" folder to "lib" folder (works better when loading the files)
++ Fixed the configurations file. Instead of using both "%()s" & "${}", using just the "${}" format
++ Added more image history files
++ Added version history notes file (may have missing data, a first try to work with such file)
++ New code:
+ * general_funcs:
+  - Seperated the "captcha_funcs" functions file into captcha relevant functions and more general ones
+  
+ * load_analyzer_config_file:
+  - Takes care of all the configuration data inside an orderly class. Replacing many lines inside the "main" & "local_test", and removed the need of huge amount of variables to each function.
+  
++ Code changes:
+ * main:
+  - Added "ExtendedInterpolation" to use the extended interpolation ("${}") instead of the regular interpolation ("%()s") inside the configurations file
+  - Removed all the lines that loaded the configuration file variables (see: "load_analyzer_config_file")
+  
+ * local_test:
+  - Added "ExtendedInterpolation" to use the extended interpolation ("${}") instead of the regular interpolation ("%()s") inside the configurations file
+  - Removed all the lines that loaded the configuration file variables (see: "load_analyzer_config_file")
+  - Added a direct import to "makedirs"
+  - Replaced the "model_test_results" for loop with list comprehensions ("inline for")
+  - Added a simple description for the progress bar
+
+ * captcha_funcs
+  - Removed the need of huge amount of variables to each function (see: "load_analyzer_config_file")
+  - Commented a print line to avoid a conflict with the updating terminal progress bar (printing while he is updating will lead to multiple lines of the progress bar). For the same reason the "client_config" is being loaded externally as the client is loaded directly from the "load_analyzer_config_file" file and prints an automatic message to the terminal after it been loaded
+  
+ * local_test_funcs:
+  - Removed the need of huge amount of variables to each function (see: "load_analyzer_config_file")
+
+ * def_analyzer_config_file:
+  - Changed to more specific name from "def_config_file" so there will be some different from other projects
+  - replaced "%()s" interpolations with "${}" ones
+  - Copied changed made in the Dorking project:
+  -- Moved all the free lines after the functions into a new function named "read_config_file" that need to be first called from the main program ("config_file" constant is now a function input)
+  -- Added "config.read(config_file)" line after every time the configuration file is changed to also update the program loaded data

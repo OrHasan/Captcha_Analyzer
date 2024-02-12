@@ -1,18 +1,13 @@
-import os
-import sys
 from difflib import SequenceMatcher
 # - - - - - - - - - - - - - - -
-sys.path.insert(1, os.path.abspath('Code'))
-from Code import captcha_funcs as func
+from lib import general_funcs, captcha_funcs
 
-def analyze_captcha(img, cleared_captcha_file, use_median, use_dilate_erode,
-                    median_kernel_size, dilate_erode_kernel_size, dilate_erode_iterations,
-                    show_comparison, client, client_access_attempts, captcha, filter_dir):
-    fig = func.filter_captcha(img, cleared_captcha_file, use_median, use_dilate_erode, median_kernel_size,
-                              dilate_erode_kernel_size, dilate_erode_iterations, show_comparison)
-    result = func.run_model(client, cleared_captcha_file, client_access_attempts)
+
+def analyze_captcha(img, config, client_config, use_median, use_dilate_erode, captcha, filter_dir):
+    fig = captcha_funcs.filter_captcha(img, config, use_median, use_dilate_erode)
+    result = captcha_funcs.run_model(config, client_config)
     quality_string, extra_chars = detection_quality(captcha, result)
-    current_index = func.get_file_index(filter_dir)
+    current_index = general_funcs.get_file_index(filter_dir)
     captcha_file = filter_dir + "/Captcha #" + str(current_index) + "- '" + result + "' (" + quality_string
     if extra_chars:
         captcha_file += ", " + extra_chars
