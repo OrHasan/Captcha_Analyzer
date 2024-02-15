@@ -12,12 +12,14 @@ def create_general_section():
                          'cleared_captcha_file': "${data_folder}/cleared captcha.png",
                          'captcha_attempts': "20"}
 
+
 def create_website_section():
     # Website:
     config['website'] = {'website_url': "https://www.zone-h.org/archive?hz=1",
                          'captcha_id': "cryptogram",
                          'text_field_name': "captcha",
                          'submit_button_xpath': "//*[@id='propdeface']/form/input[2]"}
+
 
 def create_filters_section():
     # Filters settings:
@@ -29,15 +31,18 @@ def create_filters_section():
                         'dilate_erode_kernel_size': "(3, 3)",
                         'dilate_erode_iterations': "1"}
 
+
 def create_client_section():
     # Client:
     config['client'] = {'client_url': "https://docparser-text-captcha-breaker.hf.space/",
                         'client_access_attempts': "3",
                         'client_access_delay': "0.25"}
 
+
 def create_debug_section():
     # Debug settings:
     config['debug'] = {'show_comparison': "True"}
+
 
 def create_local_test_section():
     # Tests:

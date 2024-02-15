@@ -2,13 +2,13 @@
 
 <div align="center">
   <h2> Captcha_Analyzer </h2>
-  <h5> Using a controlled chrome browser, the code Browsing to the site, Capturing the captcha, Filtering all the noise from the text, Translating it to a text output, and finally Sending the result to the website </h5>
+  <h5> Using a controlled Chrome browser, the code Browsing to the site, Capturing the captcha, Filtering all the noise from the text, Translating it to a text output, and finally Sending the result to the website </h5>
 </div>
 
 <br />
 
 > [!NOTE]
-> For now, this code is working only with "Zone-H" website, as other websites may use other captchas and it also will require changes in the configurations file so the program will know where in the page each elemnt is located
+> For now, this code is working only with "Zone-H" website, as other websites may use other captchas, and it also will require changes in the configurations file so the program will know where in the page each elemnt is located
 
 <br />
 
@@ -108,9 +108,9 @@ For each captcha in the _[test_database_dir]_ folder there will be a progress ba
 ### Filter Test
 **Test filters - Testing a different combination of the available filters**
 
-Each file in the _[test_database_dir]_ folder need to be called with the expected result. The test will run each captcha with every specified filters combination in the code and save the filtering proccess picture in a corresponding subfolder inside "Methods Test" folder.
+Each file in the _[test_database_dir]_ folder need to be called with the expected result. The test will run each captcha with every specified filters combination in the code and save the filtering process picture in a corresponding sub-folder inside "Methods Test" folder.
 
-The result files' names will be in the follwing logic:
+The result files' names will be in the following logic:
 
 `Captch #[Index] - '[Result]' ([X] of [Y] chars, [Z] extra chars).png`
 
@@ -135,9 +135,9 @@ Testing the following filters combinations:
 <!-- FILTERS -->
 ## Filters
 ### Median Blur
-**(Use to clear _"Salt & Papper"_ noise)**
+**(Use to clear _"Salt & Paper"_ noise)**
 
-Running a mask on the picture (as example - 3x3), and replacing the pixel value in the center of the crossover between the picture and the mask with a middle value in the crossover (while looking on those values in an ascending order).
+Running a mask on the picture (as example - 3x3), and replacing the pixel value in the center of the crossover between the picture and the mask with a middle value in the crossover (while looking on those values in ascending order).
 
 <div align="center">
   
@@ -150,7 +150,7 @@ Running a mask on the picture (as example - 3x3), and replacing the pixel value 
 ### Erosion
 **(Use to shrink/remove objects)**
 
-Running a mask on the picture, and removing any pixel that found in a place that the crossover between the picture and the mask isn't the same.
+Running a mask on the picture, and removing any pixel that found in a place that the crossover between the picture and the mask aren't the same.
 
 <div align="center">
   
@@ -163,7 +163,7 @@ Running a mask on the picture, and removing any pixel that found in a place that
 ### Dilation
 **(Use to expand objects)**
 
-Running a mask on the picture, and adding pixels in the crossover between the picture and the mask if the central pixal in the crossover is the same.
+Running a mask on the picture, and adding pixels in the crossover between the picture and the mask if the central pixel in the crossover is the same.
 
 <div align="center">
   

@@ -64,3 +64,8 @@ Version 3
   - Copied changed made in the Dorking project:
   -- Moved all the free lines after the functions into a new function named "read_config_file" that need to be first called from the main program ("config_file" constant is now a function input)
   -- Added "config.read(config_file)" line after every time the configuration file is changed to also update the program loaded data
+
+
+Version 3.1
++ Fixed the "requirements.txt" file
++ Little changes as to automatic code inspection, including: typos & missing spaces

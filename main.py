@@ -7,7 +7,6 @@ from selenium.webdriver.common.by import By
 from lib.load_analyzer_config_file import LoadConfig
 from lib import def_analyzer_config_file as create_config, detect_arch, general_funcs, captcha_funcs
 
-
 configurations = ConfigParser(interpolation=ExtendedInterpolation())
 config_file = "analyzer configurations.ini"
 configurations.read(config_file)
@@ -46,24 +45,25 @@ for i in range(general_config['captcha_attempts']):
     try:
         captcha = driver.find_element(By.ID, website_config['captcha_id'])
 
-        captcha_process_file = general_config['process_history_dir'] + "/Failed/Captcha #"\
-                               + str(process_fail_index+i) + "- '" + result
-        cleared_captcha_new_dir = general_config['cleared_history_dir'] + "/Failed/Captcha #"\
-                                  + str(cleared_fail_index+i) + "- '" + result
-        fig.savefig(captcha_process_file + "' - Attempt " + str(i+1) + " - Failed.png", bbox_inches='tight')
-        shutil.move(general_config['cleared_captcha_file'], cleared_captcha_new_dir + "' - Attempt " + str(i+1) + " - Failed.png")
+        captcha_process_file = general_config['process_history_dir'] + "/Failed/Captcha #" \
+                               + str(process_fail_index + i) + "- '" + result
+        cleared_captcha_new_dir = general_config['cleared_history_dir'] + "/Failed/Captcha #" \
+                                  + str(cleared_fail_index + i) + "- '" + result
+        fig.savefig(captcha_process_file + "' - Attempt " + str(i + 1) + " - Failed.png", bbox_inches='tight')
+        shutil.move(general_config['cleared_captcha_file'],
+                    cleared_captcha_new_dir + "' - Attempt " + str(i + 1) + " - Failed.png")
         sleep(config.client()['client_access_delay'])
 
     except:
         print("Debug: Code finished as expected")
 
-        captcha_process_file = general_config['process_history_dir'] + "/Succeeded/Captcha #"\
+        captcha_process_file = general_config['process_history_dir'] + "/Succeeded/Captcha #" \
                                + str(process_pass_index) + "- '" + result
-        cleared_captcha_new_dir = general_config['cleared_history_dir'] + "/Succeeded/Captcha #"\
+        cleared_captcha_new_dir = general_config['cleared_history_dir'] + "/Succeeded/Captcha #" \
                                   + str(cleared_pass_index) + "- '" + result
-        fig.savefig(captcha_process_file + "' - Attempt " + str(i+1) + " - Succeeded.png", bbox_inches='tight')
+        fig.savefig(captcha_process_file + "' - Attempt " + str(i + 1) + " - Succeeded.png", bbox_inches='tight')
         shutil.move(general_config['cleared_captcha_file'],
-                    cleared_captcha_new_dir + "' - Attempt " + str(i+1) + " - Succeeded.png")
+                    cleared_captcha_new_dir + "' - Attempt " + str(i + 1) + " - Succeeded.png")
         break
 
 # cv2.destroyAllWindows()
