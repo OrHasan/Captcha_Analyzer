@@ -10,7 +10,9 @@ def create_general_section():
                          'cleared_history_dir': "${history_dir}/cleared captchas",
                          'achieved_captcha_file': "${data_folder}/new captcha.png",
                          'cleared_captcha_file': "${data_folder}/cleared captcha.png",
-                         'captcha_attempts': "20"}
+                         'captcha_attempts': "20",
+                         'selenium_minimum_wait': '1',
+                         'selenium_condition_wait': '3'}
 
 
 def create_website_section():

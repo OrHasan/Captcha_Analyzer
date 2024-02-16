@@ -37,7 +37,9 @@ class LoadConfig:
                     'cleared_history_dir': self.config['general']['cleared_history_dir'],
                     'achieved_captcha_file': self.config['general']['achieved_captcha_file'],
                     'cleared_captcha_file': self.config['general']['cleared_captcha_file'],
-                    'captcha_attempts': int(self.config['general']['captcha_attempts'])
+                    'captcha_attempts': int(self.config['general']['captcha_attempts']),
+                    'selenium_minimum_wait': float(self.config['general']['selenium_minimum_wait']),
+                    'selenium_condition_wait': float(self.config['general']['selenium_condition_wait']),
                 }
 
             except KeyError:

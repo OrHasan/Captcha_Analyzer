@@ -69,3 +69,14 @@ Version 3
 Version 3.1
 + Fixed the "requirements.txt" file
 + Little changes as to automatic code inspection, including: typos & missing spaces
+
+
+Version 3.2
++ New code: moved the main part of the code into "solve_captcha" file
++ Added 2 new parameters:
+ - selenium_minimum_wait, to declare minimum wait time for an element before throwing an error
+ - selenium_condition_wait, to declare how much time to wait in case of a specific condition for an element (currently not in use)
++ Combined the 4 files count indexes variables to a single key-value pairs
++ Added function output of the page cookies (ZHE & PHPSESSID) to be able to use them to pass the captcha request in other codes
++ Added program terminate condition in case of failing to solve the captcha in all the attempts
++ Added more image history files
