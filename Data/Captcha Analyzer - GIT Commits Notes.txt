@@ -80,3 +80,7 @@ Version 3.2
 + Added function output of the page cookies (ZHE & PHPSESSID) to be able to use them to pass the captcha request in other codes
 + Added program terminate condition in case of failing to solve the captcha in all the attempts
 + Added more image history files
+
+
+Version 3.2.1
++ Added Zone-h webpage picture
