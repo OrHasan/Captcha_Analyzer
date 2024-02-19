@@ -84,3 +84,12 @@ Version 3.2
 
 Version 3.2.1
 + Added Zone-h webpage picture
+
+
+Version 3.3
++ Added __name__ == "__main__" so the main can run as a standalone or as callable function
++ Removed "#" from 2 driver option lines
+
+
+Version 3.3.1
++ Added the new History folder picture and this file
