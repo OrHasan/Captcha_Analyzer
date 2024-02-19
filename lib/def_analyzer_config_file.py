@@ -43,7 +43,7 @@ def create_client_section():
 
 def create_debug_section():
     # Debug settings:
-    config['debug'] = {'show_comparison': "True"}
+    config['debug'] = {'show_comparison': "False"}
 
 
 def create_local_test_section():
