@@ -45,20 +45,22 @@
 
 <!-- CONFIGURATION FILE -->
 ## Configuration File
-Almost any important data inside the code can be reconfigured directly from the `Analyzer Configurations.ini` file without the need to interact with the code itself.
+Almost any important data inside the code can be reconfigured directly from the `analyzer configurations.ini` file without the need to interact with the code itself.
 
 In case of a missing file, the code will create it with the default data that can be found inside `def_config_file.py`. In case of a missing section or a specific key in one of the file sections, the code will replace the entire section with the default data (the rest of the file will be untouched).
 
-**Analyzer Configurations.ini** - Detailed
+**analyzer configurations.ini** - Detailed
 ```
 [general]
-data_folder = Data                                            # Data directory name
-history_dir = %(data_folder)s/History                         # Directory of all captured captchas and the detection results for a future ML model
-process_history_dir = %(history_dir)s/Filtering Process       # Filtering process pictures history
-cleared_history_dir = %(history_dir)s/Cleared Captchas        # Final filtered pictures history
-achieved_captcha_file = %(data_folder)s/New Captcha.png       # Where to save the current tested captcha
-cleared_captcha_file = %(data_folder)s/Cleared Captcha.png    # Where to save the current filtered captcha
-captcha_attempts = 20                                         # How many attempts to detect the captcha
+data_folder = data                                           # Data directory name
+history_dir = ${data_folder}/history                         # Directory of all captured captchas and the detection results for a future ML model
+process_history_dir = ${history_dir}/filtering process       # Filtering process pictures history
+cleared_history_dir = ${history_dir}/cleared captchas        # Final filtered pictures history
+achieved_captcha_file = ${data_folder}/new captcha.png       # Where to save the current tested captcha
+cleared_captcha_file = ${data_folder}/cleared captcha.png    # Where to save the current filtered captcha
+captcha_attempts = 20                                        # How many attempts to detect the captcha
+selenium_minimum_wait = 1                                    # Declare minimum wait time for an element before throwing an error
+selenium_condition_wait = 3                                  # Declare how much time to wait in case of a specific condition for an element
 
 [website]
 website_url = https://www.zone-h.org/archive?hz=1            # The URL with the captcha
@@ -79,19 +81,19 @@ client_access_attempts = 3                                       # Client access
 client_access_delay = 0.25                                       # Delay between the access attempts to the client
 
 [debug]
-show_comparison = True    # Show the filtering process picture
+show_comparison = False    # Show the filtering process picture
 
 [local_test]
 test_type = Model Test                                      # Choice the test type:
                                                               # "Model Test" - Test the analysis model constancy
                                                               # "Filter Test" - Test different filtering steps
-test_database_dir = ${general:data_folder}/Test Database    # Directory of all the desired captchas to run the test on
+test_database_dir = ${general:data_folder}/test database    # Directory of all the desired captchas to run the test on
 test_client_access_delay = 0.5                              # Same as "client_access_delay" but specific for the local test
 model_test_repeats = 10                                     # How many times to run the Model Test on each captcha
-methods_test_dir = ${general:data_folder}/Methods Test      # Directory to save the results of using different filtering steps
-filter_1_dir = %(methods_test_dir)s/Filter 1                # Directory to save the results of using only the Median filter
-filters_1_2_3_dir = %(methods_test_dir)s/Filters 1,2,3      # Directory to save the results of using all the filters together
-filters_2_3_dir = %(methods_test_dir)s/Filters 2,3          # Directory to save the results of using only the Dilation & Erosion filters
+methods_test_dir = ${general:data_folder}/methods test      # Directory to save the results of using different filtering steps
+filter_1_dir = ${methods_test_dir}/filter 1                 # Directory to save the results of using only the Median filter
+filters_1_2_3_dir = ${methods_test_dir}/filters 1,2,3       # Directory to save the results of using all the filters together
+filters_2_3_dir = ${methods_test_dir}/filters 2,3           # Directory to save the results of using only the Dilation & Erosion filters
 ```
 
 <p align="right"><a href="#readme-top">back to top</a></p>
