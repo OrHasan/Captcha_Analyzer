@@ -10,7 +10,9 @@ def create_general_section():
                          'cleared_history_dir': "${history_dir}/cleared captchas",
                          'achieved_captcha_file': "${data_folder}/new captcha.png",
                          'cleared_captcha_file': "${data_folder}/cleared captcha.png",
-                         'captcha_attempts': "20",
+                         'captcha_attempts': "50",
+                         'capcha_maximum_length': "5",
+                         'letters_only': "True",
                          'selenium_minimum_wait': '1',
                          'selenium_condition_wait': '3'}
 
@@ -20,7 +22,8 @@ def create_website_section():
     config['website'] = {'website_url': "https://www.zone-h.org/archive?hz=1",
                          'captcha_id': "cryptogram",
                          'text_field_name': "captcha",
-                         'submit_button_xpath': "//*[@id='propdeface']/form/input[2]"}
+                         'submit_button_xpath': "//*[@id='propdeface']/form/input[2]",
+                         'close_on_finish': "False"}
 
 
 def create_filters_section():

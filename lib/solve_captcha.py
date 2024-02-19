@@ -8,6 +8,37 @@ from selenium.webdriver.common.by import By
 from lib import captcha_funcs
 
 
+def remove_numbers(result):
+    letters_result = ""
+    for char in result:
+        match char:
+            case "0":   # O / D
+                letters_result += "O"
+            case "1":   # I / X / T
+                letters_result += "I"
+            case "2":
+                letters_result += "Z"
+            case "3":
+                letters_result += "B"
+            case "4":   # A / R
+                letters_result += "A"
+            case "5":
+                letters_result += "S"
+            case "6":   # e / E / O (/G)
+                letters_result += "E"
+            case "7":   # I / X / T
+                letters_result += "X"
+            case "8":
+                letters_result += "B"
+            case "9":
+                letters_result += "O"
+            case _:
+                letters_result += char
+    result_changed = result != letters_result
+
+    return letters_result, result_changed
+
+
 def check_if_verified(driver, config, fig, result, attempt_number, indexes):
     general_config = config.general()
     verified = False
@@ -59,8 +90,14 @@ def solve(driver, config, indexes):
         fig = captcha_funcs.filter_captcha(img, config, filter_config['use_median'], filter_config['use_dilate_erode'])
 
         # Send to client to analyze:
-        result = captcha_funcs.run_model(config, client_config)
-        print(f"Attempt #{i} detected text:", result)
+        result = captcha_funcs.run_model(config, client_config)[:general_config['capcha_maximum_length']]
+        if general_config['letters_only']:
+            print(f"Attempt #{i} detected text:", result)
+            result, result_changed = remove_numbers(result)
+            if result_changed:
+                print(f"Text after numbers replacement:", result)
+        else:
+            print(f"Attempt #{i} detected text:", result)
         # cv2.waitKey(0)
 
         driver.find_element(By.NAME, website_config['text_field_name']).send_keys(result)
@@ -74,7 +111,7 @@ def solve(driver, config, indexes):
             print(f"Captcha transcription failed {attempts} times")
             print("\n\033[41m {}\033[00m".format('ERROR'),
                   "\033[91m {}\033[00m".format("FAILED to pass the captcha"))
-            sys.exit(1)
+            # sys.exit(1)
 
         else:
             sleep(client_config['client_access_delay'])

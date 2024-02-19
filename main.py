@@ -6,6 +6,8 @@ from lib import def_analyzer_config_file as create_config, detect_arch, general_
 
 
 def main():
+    global driver
+
     configurations = ConfigParser(interpolation=ExtendedInterpolation())
     config_file = "analyzer configurations.ini"
     configurations.read(config_file)
@@ -13,6 +15,7 @@ def main():
 
     config = LoadConfig()
     general_config = config.general()
+    website_config = config.website()
 
     indexes = {'process_pass_index': general_funcs.get_file_index(general_config['process_history_dir'] + "/Succeeded"),
                'process_fail_index': general_funcs.get_file_index(general_config['process_history_dir'] + "/Failed"),
@@ -23,10 +26,12 @@ def main():
     driver = detect_arch.detect_arch_webdriver()
     driver.implicitly_wait(general_config['selenium_minimum_wait'])
     # wait = WebDriverWait(driver, general_config['selenium_condition_wait'])
-    driver.get(config.website()['website_url'])
+    driver.get(website_config['website_url'])
 
     zhe, phpsessid = solve_captcha.solve(driver, config, indexes)
-    driver.quit()
+
+    if website_config['close_on_finish']:
+        driver.quit()
     return zhe, phpsessid
 
 

@@ -59,6 +59,8 @@ cleared_history_dir = ${history_dir}/cleared captchas        # Final filtered pi
 achieved_captcha_file = ${data_folder}/new captcha.png       # Where to save the current tested captcha
 cleared_captcha_file = ${data_folder}/cleared captcha.png    # Where to save the current filtered captcha
 captcha_attempts = 20                                        # How many attempts to detect the captcha
+capcha_maximum_length = 5                                    # Maximum possible letters to take into account in the transcription result
+letters_only = True                                          # Replace any numbers in the transcription result with similar letters
 selenium_minimum_wait = 1                                    # Declare minimum wait time for an element before throwing an error
 selenium_condition_wait = 3                                  # Declare how much time to wait in case of a specific condition for an element
 
@@ -67,6 +69,7 @@ website_url = https://www.zone-h.org/archive?hz=1            # The URL with the 
 captcha_id = cryptogram                                      # html captcha ID
 text_field_name = captcha                                    # html text field Name
 submit_button_xpath = //*[@id='propdeface']/form/input[2]    # html submit button XPath
+close_on_finish = False                                      # Close the driver (&browser) when the captcha transcription process is done
 
 [filter]
 use_median = True                    # Use the Median Blur filter on the captcha (good for salt-papper noise)

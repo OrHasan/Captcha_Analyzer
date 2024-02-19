@@ -38,6 +38,8 @@ class LoadConfig:
                     'achieved_captcha_file': self.config['general']['achieved_captcha_file'],
                     'cleared_captcha_file': self.config['general']['cleared_captcha_file'],
                     'captcha_attempts': int(self.config['general']['captcha_attempts']),
+                    'capcha_maximum_length': int(self.config['general']['capcha_maximum_length']),
+                    'letters_only': eval(self.config['general']['letters_only']),
                     'selenium_minimum_wait': float(self.config['general']['selenium_minimum_wait']),
                     'selenium_condition_wait': float(self.config['general']['selenium_condition_wait']),
                 }
@@ -49,11 +51,25 @@ class LoadConfig:
         for i in range(2):
             try:
                 return {
-                    'show_comparison': self.config['debug']['show_comparison']
+                    'show_comparison': eval(self.config['debug']['show_comparison'])
                 }
 
             except KeyError:
                 LoadConfig.error_handling(self, i, "debug")
+
+    def website(self):
+        for i in range(2):
+            try:
+                return {
+                    'website_url': self.config['website']['website_url'],
+                    'captcha_id': self.config['website']['captcha_id'],
+                    'text_field_name': self.config['website']['text_field_name'],
+                    'submit_button_xpath': self.config['website']['submit_button_xpath'],
+                    'close_on_finish': eval(self.config['website']['close_on_finish'])
+                }
+
+            except KeyError:
+                LoadConfig.error_handling(self, i, "website")
 
     def filter(self):
         # 3 options(median, dilate_erode):
@@ -82,19 +98,6 @@ class LoadConfig:
 
             except KeyError:
                 LoadConfig.error_handling(self, i, "client")
-
-    def website(self):
-        for i in range(2):
-            try:
-                return {
-                    'text_field_name': self.config['website']['text_field_name'],
-                    'submit_button_xpath': self.config['website']['submit_button_xpath'],
-                    'website_url': (self.config['website']['website_url']),
-                    'captcha_id': self.config['website']['captcha_id']
-                }
-
-            except KeyError:
-                LoadConfig.error_handling(self, i, "website")
 
     def local_test(self):
         # "Model Test" - Test the analysis model constancy
