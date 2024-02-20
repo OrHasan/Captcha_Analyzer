@@ -63,8 +63,8 @@ class LoadConfig:
                 return {
                     'website_url': self.config['website']['website_url'],
                     'captcha_id': self.config['website']['captcha_id'],
-                    'text_field_name': self.config['website']['text_field_name'],
-                    'submit_button_xpath': self.config['website']['submit_button_xpath'],
+                    'text_field_css_selector': self.config['website']['text_field_css_selector'],
+                    'submit_button_css_selector': self.config['website']['submit_button_css_selector'],
                     'close_on_finish': eval(self.config['website']['close_on_finish'])
                 }
 

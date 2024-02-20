@@ -19,10 +19,11 @@ def create_general_section():
 
 def create_website_section():
     # Website:
-    config['website'] = {'website_url': "https://www.zone-h.org/archive?hz=1",
+    config['website'] = {'website_url': "https://www.zone-h.org/archive/filter=1/published=0"
+                                        "/domain=.il/fulltext=1/page=1?hz=1",
                          'captcha_id': "cryptogram",
-                         'text_field_name': "captcha",
-                         'submit_button_xpath': "//*[@id='propdeface']/form/input[2]",
+                         'text_field_css_selector': "input[type='text']",
+                         'submit_button_css_selector': "input[type='submit']",
                          'close_on_finish': "False"}
 
 

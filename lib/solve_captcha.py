@@ -100,8 +100,8 @@ def solve(driver, config, indexes):
             print(f"Attempt #{i} detected text:", result)
         # cv2.waitKey(0)
 
-        driver.find_element(By.NAME, website_config['text_field_name']).send_keys(result)
-        driver.find_element(By.XPATH, website_config['submit_button_xpath']).click()
+        driver.find_elements(By.CSS_SELECTOR, website_config['text_field_css_selector'])[1].send_keys(result)
+        driver.find_element(By.CSS_SELECTOR, website_config['submit_button_css_selector']).click()
 
         verified, captcha = check_if_verified(driver, config, fig, result, i, indexes)
         if verified:

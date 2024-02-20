@@ -122,3 +122,10 @@ Version 3.4
  * solve_captcha:
   - New function - remove_numbers: if "letters_only" is True, replace transcription result numbers with similar letters (include debug lines to show the result before and after this change)
   - Disabled the "sys.exit(1)" line
+
+
+Version 3.5
++ To be able to run the code even if the website is changing fields parameters, replaced 2 configuration variables:
+ - text_field_name -> text_field_css_selector
+ - submit_button_xpath -> submit_button_css_selector
++ Website URL as been updated to pass also the ".il" filter captcha
