@@ -5,7 +5,7 @@ from lib.load_analyzer_config_file import LoadConfig
 from lib import def_analyzer_config_file as create_config, detect_arch, general_funcs, solve_captcha
 
 
-def main():
+def get_cookie_and_over_captcha():
     global driver
 
     configurations = ConfigParser(interpolation=ExtendedInterpolation())
@@ -17,10 +17,21 @@ def main():
     general_config = config.general()
     website_config = config.website()
 
-    indexes = {'process_pass_index': general_funcs.get_file_index(general_config['process_history_dir'] + "/Succeeded"),
-               'process_fail_index': general_funcs.get_file_index(general_config['process_history_dir'] + "/Failed"),
-               'cleared_pass_index': general_funcs.get_file_index(general_config['cleared_history_dir'] + "/Succeeded"),
-               'cleared_fail_index': general_funcs.get_file_index(general_config['cleared_history_dir'] + "/Failed")}
+    if general_config['save_history']:
+        indexes = {'captcha_pass_index':
+                       general_funcs.get_file_index(general_config['captcha_history_dir'] + "/Succeeded"),
+                   'captcha_fail_index':
+                       general_funcs.get_file_index(general_config['captcha_history_dir'] + "/Failed"),
+                   'process_pass_index':
+                       general_funcs.get_file_index(general_config['process_history_dir'] + "/Succeeded"),
+                   'process_fail_index':
+                       general_funcs.get_file_index(general_config['process_history_dir'] + "/Failed"),
+                   'cleared_pass_index':
+                       general_funcs.get_file_index(general_config['cleared_history_dir'] + "/Succeeded"),
+                   'cleared_fail_index':
+                       general_funcs.get_file_index(general_config['cleared_history_dir'] + "/Failed")}
+    else:
+        indexes = {}
 
     # Open the url and find the captcha element
     driver = detect_arch.detect_arch_webdriver()
@@ -36,4 +47,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    get_cookie_and_over_captcha()

@@ -33,6 +33,8 @@ class LoadConfig:
         for i in range(2):
             try:
                 return {
+                    'save_history': eval(self.config['general']['save_history']),
+                    'captcha_history_dir': self.config['general']['captcha_history_dir'],
                     'process_history_dir': self.config['general']['process_history_dir'],
                     'cleared_history_dir': self.config['general']['cleared_history_dir'],
                     'achieved_captcha_file': self.config['general']['achieved_captcha_file'],
@@ -40,6 +42,8 @@ class LoadConfig:
                     'captcha_attempts': int(self.config['general']['captcha_attempts']),
                     'capcha_maximum_length': int(self.config['general']['capcha_maximum_length']),
                     'letters_only': eval(self.config['general']['letters_only']),
+                    'capitals_only': eval(self.config['general']['capitals_only']),
+                    'fix_similar_small_letters': eval(self.config['general']['fix_similar_small_letters']),
                     'selenium_minimum_wait': float(self.config['general']['selenium_minimum_wait']),
                     'selenium_condition_wait': float(self.config['general']['selenium_condition_wait']),
                 }
@@ -78,10 +82,13 @@ class LoadConfig:
             try:
                 return {
                     'use_median': eval(self.config['filter']['use_median']),
+                    'use_median_mask': eval(self.config['filter']['use_median_mask']),
                     'use_dilate_erode': eval(self.config['filter']['use_dilate_erode']),
                     'median_kernel_size': int(self.config['filter']['median_kernel_size']),
-                    'dilate_erode_kernel_size': eval(self.config['filter']['dilate_erode_kernel_size']),
-                    'dilate_erode_iterations': int(self.config['filter']['dilate_erode_iterations'])
+                    'dilate_kernel_size': eval(self.config['filter']['dilate_kernel_size']),
+                    'erode_kernel_size': eval(self.config['filter']['erode_kernel_size']),
+                    'dilate_iterations': int(self.config['filter']['dilate_iterations']),
+                    'erode_iterations': int(self.config['filter']['erode_iterations'])
                 }
 
             except KeyError:
@@ -114,8 +121,12 @@ class LoadConfig:
 
                     # Filter Test variables:
                     'filter_1_dir': self.config['local_test']['filter_1_dir'],
+                    'filter_1_masked_dir': self.config['local_test']['filter_1_masked_dir'],
                     'filters_1_2_3_dir': self.config['local_test']['filters_1_2_3_dir'],
-                    'filters_2_3_dir': self.config['local_test']['filters_2_3_dir']
+                    'filters_1_2_3_masked_dir': self.config['local_test']['filters_1_2_3_masked_dir'],
+                    'filters_2_3_dir': self.config['local_test']['filters_2_3_dir'],
+                    '5_steps_filtering_dir': self.config['local_test']['5_steps_filtering_dir'],
+                    '6_steps_filtering_dir': self.config['local_test']['6_steps_filtering_dir']
                 }
 
             except KeyError:

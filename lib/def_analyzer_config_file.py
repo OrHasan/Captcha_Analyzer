@@ -5,7 +5,9 @@ from configparser import ConfigParser, ExtendedInterpolation
 def create_general_section():
     # General:
     config['general'] = {'data_folder': "data",
+                         'save_history': "True",
                          'history_dir': "${data_folder}/history",
+                         'captcha_history_dir': "${history_dir}/captchas",
                          'process_history_dir': "${history_dir}/filtering process",
                          'cleared_history_dir': "${history_dir}/cleared captchas",
                          'achieved_captcha_file': "${data_folder}/new captcha.png",
@@ -13,6 +15,8 @@ def create_general_section():
                          'captcha_attempts': "50",
                          'capcha_maximum_length': "5",
                          'letters_only': "True",
+                         'capitals_only': "False",
+                         'fix_similar_small_letters': "True",
                          'selenium_minimum_wait': '1',
                          'selenium_condition_wait': '3'}
 
@@ -31,11 +35,14 @@ def create_filters_section():
     # Filters settings:
     # 3 options(median, dilate_erode):
     # True, True  /  True, False  /  False, True
-    config['filter'] = {'use_median': "True",
-                        'use_dilate_erode': "False",
+    config['filter'] = {'use_median': "False",
+                        'use_median_mask': "True",
+                        'use_dilate_erode': "True",
                         'median_kernel_size': "5",
-                        'dilate_erode_kernel_size': "(3, 3)",
-                        'dilate_erode_iterations': "1"}
+                        'dilate_kernel_size': "(3, 3)",
+                        'erode_kernel_size': "(3, 3)",
+                        'dilate_iterations': "1",
+                        'erode_iterations': "1"}
 
 
 def create_client_section():
@@ -53,7 +60,7 @@ def create_debug_section():
 def create_local_test_section():
     # Tests:
     # test_type: "Model Test" - Test the analysis model constancy / "Filter Test" - Test different filtering steps
-    config['local_test'] = {'test_type': "Filter Test",
+    config['local_test'] = {'test_type': "Model Test",
                             'test_database_dir': "${general:data_folder}/test database",
                             'test_client_access_delay': "0.5",
                             # Model Test variables:
@@ -61,8 +68,12 @@ def create_local_test_section():
                             # Filter Test variables:
                             'methods_test_dir': "${general:data_folder}/methods test",
                             'filter_1_dir': "${methods_test_dir}/filter 1",
+                            'filter_1_masked_dir': "${methods_test_dir}/filter 1 + mask",
                             'filters_1_2_3_dir': "${methods_test_dir}/filters 1,2,3",
-                            'filters_2_3_dir': "${methods_test_dir}/filters 2,3"}
+                            'filters_1_2_3_masked_dir': "${methods_test_dir}/filters 1,2,3 + mask",
+                            'filters_2_3_dir': "${methods_test_dir}/filters 2,3",
+                            '5_steps_filtering_dir': "${methods_test_dir}/5 steps filtering",
+                            '6_steps_filtering_dir': '${methods_test_dir}/6 steps filtering'}
 
 
 def read_config_file(config_file_name="analyzer configurations.ini"):

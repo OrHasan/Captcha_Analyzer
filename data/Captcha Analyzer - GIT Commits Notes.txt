@@ -129,3 +129,71 @@ Version 3.5
  - text_field_name -> text_field_css_selector
  - submit_button_xpath -> submit_button_css_selector
 + Website URL as been updated to pass also the ".il" filter captcha
+
+
+Version 3.6
+Contain variety of changes made for the Cyber conference in March. It seems those specific changes were tracked for a commit but have not committed, so this description may contain holes:
++ Added history folder for the original captchas
++ Changed the default filtering method from Median filter, to Dilate & Erode filters
++ Moved old history fails to a new directory: "with some false negatives of 2nd captcha", as to the discovery of the 2nd captcha that was always came after the previous captcha led the 1st to be detected as incorrect result
++ Added 50 new database captchas for the local test, after manually verifying that each one of them is correct, unlike the previous 7 ones that now been moved to the folder "unverified results" (same to their results inside the "methods test" folder). In addition, most of these captchas are inside a folder named "not included in the next local test", just to avoid running each time on all the 50
++ Added a picture of website of the used API
++ Added WORD document (Captcha Analyzer Description.docx) with the code description in short
++ Added EXCEL document (Captcha Analyzer Statistics.xlsx) with a full comparison between 7 different filtering methods on 50 captchas with verified results, including graphs
++ Updated all the project libraries + requirements file
+
++ New configurations:
+ [general]
+ - save_history - enables control on the history folder. True = save each captcha, filtered captcha & filtering process of the captcha in the history folder
+ - captcha_history_dir - location of the new original captchas directory
+ - capitals_only - force capital letters in the captcha result string
+ - fix_similar_small_letters - replace small letters in the result with different capital letters, according to previous repeated detection mistakes
+ 
+ [filter]
+ - use_median_mask - after median filter, use the original picture as a mask to remove new pixels from originally empty spots, to avoid adding additional noise
+ - dilate_kernel_size & erode_kernel_size - previously called "dilate_erode_kernel_size". now each filter got his own kernel if needed
+ - dilate_iterations & erode_iterations - previously called "dilate_erode_iterations". now each filter got his own iterations amount if needed
+ 
+ [local_test]
+ - filter_1_masked_dir, filters_1_2_3_masked_dir, 5_steps_filtering_dir, 6_steps_filtering_dir - directory location to save the results of an additional 4 filtering methods in the local test
+ 
++ New code:
+ * check_status:
+  - Was originally inside "solve_captcha"
+  - Able to detect now when passing the captcha and proceeding to another one instead of mark it as a fail
+  - Added option to disable the history files saving (captcha files will be deleted after use)
+  - Added a file move of the original captcha to the history directory
+  
+ * process_plot:
+  - Was originally inside "general_funcs"
+  - Added plot support fo the 5/6 multistep filtering methods
+  
+ * image_filters:
+  - Image filtering functions that are mostly based on the filters inside "captcha_funcs" with additions
+  - The parameters of Median filter and Dilate&Erode filters can now be taken automatically from the configurations file or with manually inserted values, while using error-handling system to varify all the needed parameters to each option were inserted (if not, an error message will appear in the terminal, but the program will continue to run while the filter will return the original picture without any filter)
+  - Dilate&Erode function also supports "method" selection:
+   1- "dilation & erosion" - dilate the picture, then erode it
+   2- "erosion & dilation" - erode the picture, then dilate it
+   3- "erosion" - erode the picture (without dilation)
+   4- "dilation" - dilate the picture (without erosion)
+  - New filter function: "remove_additional_pixels" - use the original picture as a mask to remove new pixels from originally empty spots
+  
+ * experimental_filters:
+  - The place to find tested filters that for now decided to not use them
+  - Existing filters:
+   1- sharp_img - make the image sharper
+   2- detect_edges - show the edges of the elements in the image, with selection between 2 methods: "square" / "plus"
+   3- resize_img - choice new image dimensions or rescale it with selected percentage
+   4- remove_noise_colors - remove only the colors used in the added captcha noise (colors list isn't completed)
+   5- show_letters_color_only - show only the colors used in the captcha letters (colors list isn't completed)
+   
++ Code changes:
+ * main:
+  - Added file indexes for the new captcha history folder
+  
+ * solve_captcha:
+  - "remove_numbers" function was moved to "captcha_funcs" and renamed to "remove_numbers_and_fix_small_letters", as it is now responsible to deal with more variety of common analyze mistakes, as follows:
+      e -> C ; l -> I ; 0 -> O ; 1 -> I ; 2 -> Z ; 3 -> B ; 4 -> A ; 5 -> S ; 6 -> E ; 7 -> X ; 8 -> B ; 9 -> O
+  
+ * detect_arch:
+  - Disabled the Chrome local webdriver loading and replaced it with the build-in auto-download feature, according to the installed version of Chrome browser, to prevent from the code to be broken in future Chrome releases (the local driver files may be deleted in a future commit as to this change)

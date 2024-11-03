@@ -42,13 +42,15 @@ def detect_arch_webdriver():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--window-size=1920,1080")
 
-    if system_info == 'MacOS arm64':
-        return webdriver.Chrome(service=Service('./selenium/chromedriver-mac-arm64/chromedriver'), options=options)
-    elif system_info == 'MacOS amd64':
-        return webdriver.Chrome(service=Service('./selenium/chromedriver-mac-x64/chromedriver'), options=options)
-    elif system_info == 'Windows amd64':
-        return webdriver.Chrome(service=Service('./selenium/chromedriver-win64/chromedriver.exe'), options=options)
-    elif system_info == 'Linux amd64':
-        return webdriver.Chrome(service=Service('./selenium/chromedriver-linux64/chromedriver'), options=options)
+    return webdriver.Chrome(service=Service(), options=options)
 
-    raise RuntimeError("Could not detect OS")
+    # if system_info == 'MacOS arm64':
+    #     return webdriver.Chrome(service=Service('./selenium/chromedriver-mac-arm64/chromedriver'), options=options)
+    # elif system_info == 'MacOS amd64':
+    #     return webdriver.Chrome(service=Service('./selenium/chromedriver-mac-x64/chromedriver'), options=options)
+    # elif system_info == 'Windows amd64':
+    #     return webdriver.Chrome(service=Service('./selenium/chromedriver-win64/chromedriver.exe'), options=options)
+    # elif system_info == 'Linux amd64':
+    #     return webdriver.Chrome(service=Service('./selenium/chromedriver-linux64/chromedriver'), options=options)
+    #
+    # raise RuntimeError("Could not detect OS")
