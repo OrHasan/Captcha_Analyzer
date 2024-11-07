@@ -33,7 +33,7 @@ def identify_system():
 
 
 def detect_arch_webdriver():
-    system_info = identify_system()
+    # system_info = identify_system()
 
     options = Options()
     # options.add_argument("--headless")

@@ -35,7 +35,7 @@ def solve(driver, config, indexes):
         if general_config['letters_only'] or general_config['fix_similar_small_letters']:
             result, result_changed = captcha_funcs.remove_numbers_and_fix_small_letters(result, config)
             if result_changed:
-                print(f"Text after numbers replacement:", result)
+                print(f"Text after numbers and small letters replacement:", result)
         # cv2.waitKey(0)
 
         if general_config['capitals_only']:

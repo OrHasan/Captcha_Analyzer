@@ -197,3 +197,16 @@ Contain variety of changes made for the Cyber conference in March. It seems thos
   
  * detect_arch:
   - Disabled the Chrome local webdriver loading and replaced it with the build-in auto-download feature, according to the installed version of Chrome browser, to prevent from the code to be broken in future Chrome releases (the local driver files may be deleted in a future commit as to this change)
+  
+  
+  Version 3.7
+Code merge with "Ron Khudadedi" to extract data from the website after solving the captcha, while sending to the new code the "ZHE" & "PHPSESSID" cookies, so it won't be asked to solve a captcha, even if the 2 codes will run from a different computer & browser type.
++ Old main function was moved to "general_funcs" with the new name: "solve_captcha_and_get_cookie"
++ Fixed a printed text inside "solve_captcha" to be more accurate according the previous algorithm update
++ As always, pushed the new history database pictures
++ Ron code been improved from the used source, this is some of those changes:
+ * Added a load bar to the IP extraction from the URLs process, so it won't look like the program been stuck, as errors to receive the URL IP can really impact the run time
+ * Removed unused future functions and debug lines
+ * Added new parameters into "analyzer configurations.ini" (and updated as well in "def_analyzer_config_file" & "load_analyzer_config_file"):
+  - sql_file_name - The name of the SQL file where the extracted data will be saved
+  - pages_to_scan - How many pages to scan from the website (as this is a fork version from my original code for 'Cyber7' for demonstration purpose only, the default value is 2 instead of 50 pages to save run time)

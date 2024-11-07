@@ -17,8 +17,8 @@ def create_general_section():
                          'letters_only': "True",
                          'capitals_only': "False",
                          'fix_similar_small_letters': "True",
-                         'selenium_minimum_wait': '1',
-                         'selenium_condition_wait': '3'}
+                         'selenium_minimum_wait': "1",
+                         'selenium_condition_wait': "3"}
 
 
 def create_website_section():
@@ -28,7 +28,9 @@ def create_website_section():
                          'captcha_id': "cryptogram",
                          'text_field_css_selector': "input[type='text']",
                          'submit_button_css_selector': "input[type='submit']",
-                         'close_on_finish': "False"}
+                         'close_on_finish': "False",
+                         'sql_file_name': "IL10",
+                         'pages_to_scan': "2"}
 
 
 def create_filters_section():
@@ -73,7 +75,7 @@ def create_local_test_section():
                             'filters_1_2_3_masked_dir': "${methods_test_dir}/filters 1,2,3 + mask",
                             'filters_2_3_dir': "${methods_test_dir}/filters 2,3",
                             '5_steps_filtering_dir': "${methods_test_dir}/5 steps filtering",
-                            '6_steps_filtering_dir': '${methods_test_dir}/6 steps filtering'}
+                            '6_steps_filtering_dir': "${methods_test_dir}/6 steps filtering"}
 
 
 def read_config_file(config_file_name="analyzer configurations.ini"):

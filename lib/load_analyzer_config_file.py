@@ -69,7 +69,9 @@ class LoadConfig:
                     'captcha_id': self.config['website']['captcha_id'],
                     'text_field_css_selector': self.config['website']['text_field_css_selector'],
                     'submit_button_css_selector': self.config['website']['submit_button_css_selector'],
-                    'close_on_finish': eval(self.config['website']['close_on_finish'])
+                    'close_on_finish': eval(self.config['website']['close_on_finish']),
+                    'sql_file_name': self.config['website']['sql_file_name'],
+                    'pages_to_scan': int(self.config['website']['pages_to_scan'])
                 }
 
             except KeyError:
