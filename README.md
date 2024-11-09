@@ -267,11 +267,11 @@ Running a mask on the picture, and adding pixels in the crossover between the pi
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [Website-Captcha]: Pictures/Website_Captcha.png
-[Different-Methods]: Pictures/Filters/Different_Methods.png
-[Program-Steps]: Pictures/Filters/Program_Steps.png
+[Different-Methods]: Pictures/Different_Methods.png
+[Program-Steps]: Pictures/Program_Steps.png
 [Methods-Comparison]: Pictures/Methods_Comparison.png
-[Methods-Detection-Quality]: Pictures/Filters/Methods_Detection_Quality.png
-[API-Correction]: Pictures/Filters/API_Correction.png
+[Methods-Detection-Quality]: Pictures/Methods_Detection_Quality.png
+[API-Correction]: Pictures/API_Correction.png
 [Median-Filter]: Pictures/Filters/Median_Filter.png
 [Median-Filter-Example]: Pictures/Filters/Median_Filter_Example.png
 [Erosion-Filter]: Pictures/Filters/Erosion_Filter.png
