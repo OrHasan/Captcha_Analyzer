@@ -3,7 +3,7 @@
 <div align="center">
   <h2> Captcha_Analyzer </h2>
   <h5> Websites defacement data extraction project with a captcha solver that created after the 7.10, to help the OSINT process to detect attacks on Israeli websites as fast as possible and help cyber defence groups </h5>
-  <h5> This happns by using a controlled Chrome browser: The code is Browsing to the site, Capturing the captcha, Filtering all the noise from the text in the picture, Translating it to a text output, and finally Sending the result to the website and starting to Extract the relevant data into SQL file </h5>
+  <h5> This happens by using a controlled Chrome browser: The code is Browsing to the site, Capturing the captcha, Filtering all the noise from the text in the picture, Translating it to a text output, and finally Sending the result to the website and starting to Extract the relevant data into SQL file </h5>
 </div>
 
 <br />
