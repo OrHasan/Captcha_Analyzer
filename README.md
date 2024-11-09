@@ -2,13 +2,9 @@
 
 <div align="center">
   <h2> Captcha_Analyzer </h2>
-  <h5> Using a controlled Chrome browser, the code Browsing to the site, Capturing the captcha, Filtering all the noise from the text, Translating it to a text output, and finally Sending the result to the website </h5>
+  <h5> Websites defacement data extraction project with a captcha solver that created after the 7.10, to help the OSINT process to detect attacks on Israeli websites as fast as possible and help cyber defence groups </h5>
+  <h5> This happns by using a controlled Chrome browser: The code is Browsing to the site, Capturing the captcha, Filtering all the noise from the text in the picture, Translating it to a text output, and finally Sending the result to the website and starting to Extract the relevant data into SQL file </h5>
 </div>
-
-<br />
-
-> [!NOTE]
-> For now, this code is working only with "Zone-H" website, as other websites may use other captchas, and it also will require changes in the configurations file so the program will know where in the page each elemnt is located
 
 <br />
 
@@ -33,12 +29,15 @@
         <li><a href="#filter-test">Filter Test</a></li>
       </ul>
     </li>
-    <li><a href="#filters">Filters</a></li>
+    <li><a href="#filters-theory">Filters Theory</a></li>
       <ul>
         <li><a href="#median-blur ">Median Blur</a></li>
         <li><a href="#erosion">Erosion</a></li>
         <li><a href="#dilation">Dilation</a></li>
       </ul>
+    <li>
+      <a href="#notes">Notes</a>
+    </li>
   </ol>
 </details>
 
@@ -53,30 +52,39 @@ In case of a missing file, the code will create it with the default data that ca
 ```
 [general]
 data_folder = data                                           # Data directory name
-history_dir = ${data_folder}/history                         # Directory of all captured captchas and the detection results for a future ML model
+save_history = True                                          # Enable/Disable pictures save of captured captchas and the filtering process & results history (for a future ML model)
+history_dir = ${data_folder}/history                         # Directory of all captured captchas and the filtering process & results (for a future ML model)
+captcha_history_dir = ${history_dir}/captchas                # Original captchas pictures history
 process_history_dir = ${history_dir}/filtering process       # Filtering process pictures history
 cleared_history_dir = ${history_dir}/cleared captchas        # Final filtered pictures history
 achieved_captcha_file = ${data_folder}/new captcha.png       # Where to save the current tested captcha
 cleared_captcha_file = ${data_folder}/cleared captcha.png    # Where to save the current filtered captcha
-captcha_attempts = 20                                        # How many attempts to detect the captcha
+captcha_attempts = 50                                        # How many attempts to detect the captcha
 capcha_maximum_length = 5                                    # Maximum possible letters to take into account in the transcription result
-letters_only = True                                          # Replace any numbers in the transcription result with similar letters
+letters_only = True                                          # Replace any number in the transcription result with similar letter
+capitals_only = False                                        # Force capital letters - send the transcription result string with capitals only (it's important to take into account that "fix_similar_small_letters" has a higher priority and will occour first)
+fix_similar_small_letters = True                             # Replace specific small letters in the transcription result string with similar capital letter (according to previous repeated detection mistakes)
 selenium_minimum_wait = 1                                    # Declare minimum wait time for an element before throwing an error
 selenium_condition_wait = 3                                  # Declare how much time to wait in case of a specific condition for an element
 
 [website]
-website_url = https://www.zone-h.org/archive?hz=1            # The URL with the captcha
-captcha_id = cryptogram                                      # html captcha ID
-text_field_name = captcha                                    # html text field Name
-submit_button_xpath = //*[@id='propdeface']/form/input[2]    # html submit button XPath
-close_on_finish = False                                      # Close the driver (&browser) when the captcha transcription process is done
+website_url = https://www.zone-h.org/archive/filter=1/published=0/domain=.il/fulltext=1/page=1?hz=1    # The URL with the captcha
+captcha_id = cryptogram                                                                                # html captcha ID
+text_field_css_selector = input[type='text']                                                           # html text field CSS selector
+submit_button_css_selector = input[type='submit']                                                      # html submit button CSS selector
+close_on_finish = False                                                                                # Close the driver (&browser) when the captcha transcription process is done
+sql_file_name = IL10                                                                                   # The name of the SQL file where the extracted data from the website will be saved
+pages_to_scan = 2                                                                                      # How many pages to scan from the website (as this is a fork version from my original code for 'Cyber7' for demonstration purpose only, the default value is 2 instead of 50 pages to save run time)
 
 [filter]
-use_median = True                    # Use the Median Blur filter on the captcha (good for salt-papper noise)
-use_dilate_erode = False             # Use the Dilation & Erosion filters on the captcha (can used without the median or as addition to it)
-median_kernel_size = 5               # Kernel/Mask size for the Median filter (use only odd numbers)
-dilate_erode_kernel_size = (3, 3)    # Kernel/Mask size for the Dilation & Erosion filters
-dilate_erode_iterations = 1          # How many iterations for each Dilation & Erosion filter
+use_median = False             # Use the Median Blur filter on the captcha (good for salt-papper noise)
+use_median_mask = True         # after median filter, use the original picture as a mask to remove new pixels from originally empty spots (to avoid adding additional noise)
+use_dilate_erode = True        # Use the Dilation & Erosion filters on the captcha (can used without the median or as addition to it)
+median_kernel_size = 5         # Kernel/Mask size for the Median filter (use only odd numbers)
+dilate_kernel_size = (3, 3)    # Kernel/Mask size for the Dilation filter
+erode_kernel_size = (3, 3)     # Kernel/Mask size for the Erosion filter
+dilate_iterations = 1          # How many iterations for each Dilation filter
+erode_iterations = 1           # How many iterations for each Erosion filter
 
 [client]
 client_url = https://docparser-text-captcha-breaker.hf.space/    # The picture to text client URL
@@ -87,16 +95,20 @@ client_access_delay = 0.25                                       # Delay between
 show_comparison = False    # Show the filtering process picture
 
 [local_test]
-test_type = Model Test                                      # Choice the test type:
-                                                              # "Model Test" - Test the analysis model constancy
-                                                              # "Filter Test" - Test different filtering steps
-test_database_dir = ${general:data_folder}/test database    # Directory of all the desired captchas to run the test on
-test_client_access_delay = 0.5                              # Same as "client_access_delay" but specific for the local test
-model_test_repeats = 10                                     # How many times to run the Model Test on each captcha
-methods_test_dir = ${general:data_folder}/methods test      # Directory to save the results of using different filtering steps
-filter_1_dir = ${methods_test_dir}/filter 1                 # Directory to save the results of using only the Median filter
-filters_1_2_3_dir = ${methods_test_dir}/filters 1,2,3       # Directory to save the results of using all the filters together
-filters_2_3_dir = ${methods_test_dir}/filters 2,3           # Directory to save the results of using only the Dilation & Erosion filters
+test_type = Model Test                                                 # Choice the test type:
+                                                                         # "Model Test" - Test the analysis model constancy
+                                                                         # "Filter Test" - Test different filtering steps
+test_database_dir = ${general:data_folder}/test database               # Directory of all the desired captchas to run the test on
+test_client_access_delay = 0.5                                         # Same as "client_access_delay" but specific for the local test
+model_test_repeats = 10                                                # How many times to run the Model Test on each captcha
+methods_test_dir = ${general:data_folder}/methods test                 # Directory to save the results of using different filtering steps
+filter_1_dir = ${methods_test_dir}/filter 1                            # Directory to save the results of using only the Median filter
+filter_1_masked_dir = ${methods_test_dir}/filter 1 + mask              # Directory to save the results of using only the Median filter with mask
+filters_1_2_3_dir = ${methods_test_dir}/filters 1,2,3                  # Directory to save the results of using all the filters together
+filters_1_2_3_masked_dir = ${methods_test_dir}/filters 1,2,3 + mask    # Directory to save the results of using all the filters together with mask
+filters_2_3_dir = ${methods_test_dir}/filters 2,3                      # Directory to save the results of using only the Dilation & Erosion filters
+5_steps_filtering_dir = ${methods_test_dir}/5 steps filtering          # Directory to save the results of using 5 steps filtering process
+6_steps_filtering_dir = ${methods_test_dir}/6 steps filtering          # Directory to save the results of using 6 steps filtering process
 ```
 
 <p align="right"><a href="#readme-top">back to top</a></p>
@@ -127,9 +139,15 @@ Where:
 - Z - How many extra chars were detected (`len(result) > Y`); if Z=0, this name section will be discarded
 
 Testing the following filters combinations:
-- 1 step: Median filter
-- 3 steps: Median filter -> Dilation filter -> Erosion filter
-- 2 steps: Dilation filter -> Erosion filter
+```
+- filter 1                  - 1 step:  Median filter
+- filter 1 + mask           - 2 steps: Median filter -> Mask with original
+- filters 1,2,3             - 3 steps: Median filter -> Dilation filter -> Erosion filter
+- filters 1,2,3 + mask      - 4 steps: Median filter -> Mask with original -> Dilation filter -> Erosion filter
+- filters 2,3               - 2 steps: Dilation filter -> Erosion filter
+- 5 steps filtering + mask  - 6 steps: Median filter -> Mask with original -> Median filter -> Mask with original -> Enlarge by 300% -> Dilation filter
+- 6 steps filtering + mask  - 7 steps: Median filter -> Mask with original -> Median filter -> Mask with original -> Enlarge by 300% -> Dilation filter -> Erosion filter
+```
 
 > [!NOTE]
 > The Dilation & Erosion filters are in reversed order because the results they gave were inverted
@@ -137,8 +155,8 @@ Testing the following filters combinations:
 <p align="right"><a href="#readme-top">back to top</a></p>
 
 
-<!-- FILTERS -->
-## Filters
+<!-- FILTERS THEORY -->
+## Filters (theory)
 ### Median Blur
 **(Use to clear _"Salt & Paper"_ noise)**
 
@@ -179,6 +197,12 @@ Running a mask on the picture, and adding pixels in the crossover between the pi
 </div>
 
 <p align="right"><a href="#readme-top">back to top</a></p>
+
+
+<!-- NOTES -->
+## Notes
+> [!NOTE]
+> This code is working only with "Zone-H" website, as other websites may use other captchas that have not been reviewed. It is possible to add more options by improving the "website" key in the configurations file, so the program will know where in the page each elemnt is located
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
