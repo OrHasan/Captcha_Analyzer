@@ -11,7 +11,6 @@
 <div align="center">
   
   ![Website Captcha][Website-Captcha]
-  ![Different Methods][Different-Methods]
   
 </div>
 
@@ -84,7 +83,8 @@ These are the steps the program follows:
 Thanks to this comparison, the best method was chosen as default, replacing a different one who once considered the best, and by that improving the single char detection by 13.6%, and the overall results by 26%.
 
 <div align="center">
-  
+
+  ![Different Methods][Different-Methods]
   ![Methods Comparison][Methods-Comparison]
   ![Methods Detection Quality][Methods-Detection-Quality]
     
