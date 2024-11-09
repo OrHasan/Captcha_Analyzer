@@ -10,7 +10,8 @@
 
 <div align="center">
   
-  ![Captcha Filtering Example][Filtering-Example]
+  ![Website Captcha][Website-Captcha]
+  ![Different Methods][Different-Methods]
   
 </div>
 
@@ -19,6 +20,15 @@
 <details>
   <summary>Table of Contents</summary>
   <ol>
+    <li>
+      <a href="#program-description">Program Description</a>
+      <ul>
+        <li><a href="#detailed-demonstration">Detailed Demonstration</a></li>
+        <li><a href="#steps">Steps</a></li>
+        <li><a href="#methods">Methods</a></li>
+        <li><a href="#api-correction">API Correction</a></li>
+      </ul>
+    </li>
     <li>
       <a href="#configuration-file">Configuration File</a>
     </li>
@@ -40,6 +50,56 @@
     </li>
   </ol>
 </details>
+
+
+<!-- PROGRAM DESCRIPTION -->
+## Program Description
+### Detailed Demonstration
+You can find a detailed video demonstration at:
+https://drive.google.com/file/d/1A0nLMS7UPwGOVMGBurTfxIZb5HpDl4m0/view?usp=drive_link
+
+
+### Steps
+<div align="center">
+  
+  ![Program Steps][Program-Steps]
+  
+</div>
+
+These are the steps the program follows:
+1.	Using Selenium, screenshot the captcha element
+2.	Remove the frame & Filter the noise from the captcha with the selected method
+3.	Send filtered picture to the API model ("Text Captcha Breaker")
+4.	Correct the API results as to the specific captcha
+5.	Send the result back to the site and check if passed
+6.	Save the captcha, the filtered captcha and the filtering process with the pass/fail result in history folder for future ML improvements
+7.	Redo the above steps if the site is asking for another captcha
+(There are two consecutive captchas in case of running on "Zone-h" with a search filter, and more times in case of failing)
+8.	Send the ZHE & PHPSESSID to the calling code, to able it to run without the captcha requirement
+9.	Extract the relevant data from the website and save it into SQL DB
+
+
+### Methods
+14 different methods were tested simultaneously on 50 manually pre-solved captchas.
+Thanks to this comparison, the best method was chosen as default, replacing a different one who once considered the best, and by that improving the single char detection by 13.6%, and the overall results by 26%.
+
+<div align="center">
+  
+  ![Methods Comparison][Methods-Comparison]
+  ![Methods Detection Quality][Methods-Detection-Quality]
+    
+</div>
+
+
+### API Correction
+As it is known that the captcha in this website will never contain numbers or small letters, there is one additional step to reduce false detection by replacing such detection with similiar options (based on past false detections).
+This step improved the results by 6-10%.
+
+<div align="center">
+  
+  ![API-Correction][API-Correction]
+  
+</div>
 
 
 <!-- CONFIGURATION FILE -->
@@ -206,7 +266,12 @@ Running a mask on the picture, and adding pixels in the crossover between the pi
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[Filtering-Example]: Pictures/Captcha_Filtering_Example.png
+[Website-Captcha]: Pictures/Website_Captcha.png
+[Different-Methods]: Pictures/Filters/Different_Methods.png
+[Program-Steps]: Pictures/Filters/Program_Steps.png
+[Methods-Comparison]: Pictures/Methods_Comparison.png
+[Methods-Detection-Quality]: Pictures/Filters/Methods_Detection_Quality.png
+[API-Correction]: Pictures/Filters/API_Correction.png
 [Median-Filter]: Pictures/Filters/Median_Filter.png
 [Median-Filter-Example]: Pictures/Filters/Median_Filter_Example.png
 [Erosion-Filter]: Pictures/Filters/Erosion_Filter.png
