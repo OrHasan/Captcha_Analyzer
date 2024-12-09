@@ -2,8 +2,8 @@
 
 <div align="center">
   <h2> Captcha_Analyzer </h2>
-  <h5> Websites defacement data extraction project with a captcha solver that created after the 7.10, to help the OSINT process to detect attacks on Israeli websites as fast as possible and help cyber defence groups </h5>
-  <h5> This happens by using a controlled Chrome browser: The code is Browsing to the site, Capturing the captcha, Filtering all the noise from the text in the picture, Translating it to a text output, and finally Sending the result to the website and starting to Extract the relevant data into SQL file </h5>
+  <h5> This project was designed to extract data from defaced websites using a captcha solver. Created after the events of 7.10, it supports cyber defense groups by aiding the OSINT process in detecting attacks on Israeli websites as quickly as possible </h5>
+  <h5> The program uses a controlled Chrome browser to browse the site, capture the captcha, filter out noise from the text in the image, translate it to text, send the result back to the site, and extract relevant data into an SQL file </h5>
 </div>
 
 <br />
@@ -66,21 +66,20 @@ https://drive.google.com/file/d/1A0nLMS7UPwGOVMGBurTfxIZb5HpDl4m0/view?usp=drive
 </div>
 
 These are the steps the program follows:
-1.	Using Selenium, screenshot the captcha element
-2.	Remove the frame & Filter the noise from the captcha with the selected method
-3.	Send filtered picture to the API model ("Text Captcha Breaker")
-4.	Correct the API results as to the specific captcha
-5.	Send the result back to the site and check if passed
-6.	Save the captcha, the filtered captcha and the filtering process with the pass/fail result in history folder for future ML improvements
-7.	Redo the above steps if the site is asking for another captcha
-(There are two consecutive captchas in case of running on "Zone-h" with a search filter, and more times in case of failing)
-8.	Send the ZHE & PHPSESSID to the calling code, to able it to run without the captcha requirement
-9.	Extract the relevant data from the website and save it into SQL DB
+1.	Use Selenium to screenshot the captcha element
+2.	Remove the frame and filter the noise from the captcha using the selected method
+3.	Send the filtered image to the API model ("Text Captcha Breaker")
+4.	Correct the API results specific to the captcha
+5.	Send the result back to the site and check if it passes
+6.	Save the captcha, the filtered captcha, and the filtering process with the pass/fail result in the history folder for future ML improvements
+7.	Repeat the above steps if the site requests another captcha (e.g. two consecutive captchas on "Zone-h" with a search filter, or more in case of failure)
+8.	Send the ZHE & PHPSESSID cookies to the calling code to enable it to run without the captcha requirement
+9.	Extract relevant data from the website and save it into an SQL database
 
 
 ### Methods
 14 different methods were tested simultaneously on 50 manually pre-solved captchas.
-Thanks to this comparison, the best method was chosen as default, replacing a different one who once considered the best, and by that improving the single char detection by 13.6%, and the overall results by 26%.
+Based on this comparison, the best method was chosen as the default, replacing the previously considered best method. This change improved single character detection by 13.6% and overall results by 26%.
 
 <div align="center">
 
@@ -92,8 +91,7 @@ Thanks to this comparison, the best method was chosen as default, replacing a di
 
 
 ### API Correction
-As it is known that the captcha in this website will never contain numbers or small letters, there is one additional step to reduce false detection by replacing such detection with similiar options (based on past false detections).
-This step improved the results by 6-10%.
+Since the captcha on this website never contains numbers or lowercase letters, an additional step was added to reduce false detections by replacing such detections with similar options based on past errors. This step improved results by 6-10%.
 
 <div align="center">
   
@@ -104,9 +102,9 @@ This step improved the results by 6-10%.
 
 <!-- CONFIGURATION FILE -->
 ## Configuration File
-Almost any important data inside the code can be reconfigured directly from the `analyzer configurations.ini` file without the need to interact with the code itself.
+Almost all important data within the code can be reconfigured directly from the `analyzer configurations.ini` file without interacting with the code itself.
 
-In case of a missing file, the code will create it with the default data that can be found inside `def_config_file.py`. In case of a missing section or a specific key in one of the file sections, the code will replace the entire section with the default data (the rest of the file will be untouched).
+If the file is missing, the code will create it with default data found in `def_config_file.py`. If a section or specific key is missing in one of the file sections, the code will replace the entire section with default data, leaving the rest of the file untouched.
 
 **analyzer configurations.ini** - Detailed
 ```
@@ -177,28 +175,28 @@ filters_2_3_dir = ${methods_test_dir}/filters 2,3                      # Directo
 <!-- LOCAL TESTER -->
 ## Local Tester
 ### Model Test
-**Test results constancy - Sending the cleared captcha _[model_test_repeats]_ times to the client**
+**The Model Test checks the consistency of test results by sending the cleared captcha _[model_test_repeats]_ times to the client**
 
-For each captcha in the _[test_database_dir]_ folder there will be a progress bar, and in the end of each one all the results will be printed to the console with the result.
+For each captcha in the _[test_database_dir]_ folder, a progress bar will be displayed, and all results will be printed to the console at the end of each bar.
 
 
 ### Filter Test
-**Test filters - Testing a different combination of the available filters**
+**The Filter Test evaluates different combinations of available filters**
 
-Each file in the _[test_database_dir]_ folder need to be called with the expected result. The test will run each captcha with every specified filters combination in the code and save the filtering process picture in a corresponding sub-folder inside "Methods Test" folder.
+Each file in the _[test_database_dir]_ folder should be named with the expected result. The test runs each captcha with every specified filter combination and saves the filtering process images in corresponding sub-folders inside the 'Methods Test' folder.
 
-The result files' names will be in the following logic:
+The result files are named as follows:
 
 `Captch #[Index] - '[Result]' ([X] of [Y] chars, [Z] extra chars).png`
 
 Where:
-- Index - Running index, according to the highest index currently in the folder
-- Result - Client result from the filtered captcha
-- X - How many correct chars were detected (same char in the same location as in the original file name)
-- Y - How many chars available in the picture (according to the original file name)
-- Z - How many extra chars were detected (`len(result) > Y`); if Z=0, this name section will be discarded
+- **Index**: Running index, according to the highest index currently in the folder
+- **Result**: Client result from the filtered captcha
+- **X**: Number of correct characters detected (same character in the same location as in the original file name)
+- **Y**: Number of characters available in the picture (according to the original file name)
+- **Z**: Number of extra characters detected (`len(result) > Y`); if Z=0, this section is discarded
 
-Testing the following filters combinations:
+Testing the following filter combinations:
 ```
 - filter 1                  - 1 step:  Median filter
 - filter 1 + mask           - 2 steps: Median filter -> Mask with original
@@ -218,9 +216,9 @@ Testing the following filters combinations:
 <!-- FILTERS THEORY -->
 ## Filters (theory)
 ### Median Blur
-**(Use to clear _"Salt & Paper"_ noise)**
+**Purpose: Clears _"Salt & Paper"_ noise**
 
-Running a mask on the picture (as example - 3x3), and replacing the pixel value in the center of the crossover between the picture and the mask with a middle value in the crossover (while looking on those values in ascending order).
+**Method:** Applies a mask (e.g. 3x3) to the image and replaces the pixel value at the center of the mask with the median value of the pixels within the mask.
 
 <div align="center">
   
@@ -231,9 +229,9 @@ Running a mask on the picture (as example - 3x3), and replacing the pixel value 
 </div>
 
 ### Erosion
-**(Use to shrink/remove objects)**
+**Purpose: Shrinks or removes objects**
 
-Running a mask on the picture, and removing any pixel that found in a place that the crossover between the picture and the mask aren't the same.
+**Method:** Applies a mask to the image and removes any pixel where the mask and the image do not match.
 
 <div align="center">
   
@@ -244,9 +242,9 @@ Running a mask on the picture, and removing any pixel that found in a place that
 </div>
 
 ### Dilation
-**(Use to expand objects)**
+**Purpose: Expands objects**
 
-Running a mask on the picture, and adding pixels in the crossover between the picture and the mask if the central pixel in the crossover is the same.
+**Method:** Applies a mask to the image and adds pixels where the central pixel of the mask matches the image.
 
 <div align="center">
   
@@ -262,7 +260,7 @@ Running a mask on the picture, and adding pixels in the crossover between the pi
 <!-- NOTES -->
 ## Notes
 > [!NOTE]
-> This code is working only with "Zone-H" website, as other websites may use other captchas that have not been reviewed. It is possible to add more options by improving the "website" key in the configurations file, so the program will know where in the page each elemnt is located
+> This code currently works only with the 'Zone-H' website, as other websites may use different captchas that have not been reviewed. It is possible to try other options by updating the 'website' section in the configurations file, allowing the program to locate each element on the page.
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
