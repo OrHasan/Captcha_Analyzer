@@ -2,8 +2,8 @@
 
 <div align="center">
   <h2> Captcha_Analyzer </h2>
-  <h5> This project was designed to extract data from defaced websites using a captcha solver. Created after the events of 7.10, it supports cyber defense groups by aiding the OSINT process in detecting attacks on Israeli websites as quickly as possible </h5>
-  <h5> The program uses a controlled Chrome browser to browse the site, capture the captcha, filter out noise from the text in the image, translate it to text, send the result back to the site, and extract relevant data into an SQL file </h5>
+  <h5> This project was designed to extract data from defaced websites using an image captcha solver. Created after the events of 7.10, it supports cyber defense groups by aiding the OSINT process in detecting attacks on Israeli websites as quickly and accurately as possible </h5>
+  <h5> The program uses a controlled Chrome browser to browse the site, capture the captcha, filter out noise from the text in the image, transcribe it to text, send the result back to the site, and extract relevant data into an SQL file </h5>
 </div>
 
 <br />
